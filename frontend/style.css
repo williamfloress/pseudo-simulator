@@ -1,0 +1,485 @@
+/* ==========================================================================
+   CSS Variables & Tokens (Cyber-Industrial Dark Theme)
+   ========================================================================== */
+   :root {
+    /* Paleta de colores - Raw & Brutal */
+    --bg-main: #050505;
+    --bg-panel: #0d0d0f;
+    --border-color: #333333;
+    --border-accent: #00e5ff;
+    
+    --text-primary: #f0f0f0;
+    --text-secondary: #888888;
+    --text-data: #00e5ff;
+    
+    --accent-primary: #00e5ff;
+    --accent-hover: #00b3cc;
+    --accent-secondary: #ff3d00;
+    
+    --success: #00ff66;
+    --danger: #ff003c;
+    
+    /* Tipografía */
+    --font-ui: 'Outfit', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    
+    /* Espaciado */
+    --space-1: 0.5rem;
+    --space-2: 1rem;
+    --space-3: 1.5rem;
+    --space-4: 2.5rem;
+    
+    /* Bordes y Sombras (Hard Edges) */
+    --radius-sm: 0px;
+    --radius-md: 0px;
+    --radius-lg: 0px;
+    
+    --transition-fast: 0.15s ease-out;
+}
+
+/* ==========================================================================
+   Reseteo y Base
+   ========================================================================== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-ui);
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    line-height: 1.5;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    /* Grid background para efecto de laboratorio/plano */
+    background-image: 
+        linear-gradient(rgba(0, 229, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 229, 255, 0.03) 1px, transparent 1px);
+    background-size: 30px 30px;
+    background-position: center center;
+    font-weight: 300;
+}
+
+::selection {
+    background: var(--accent-primary);
+    color: #000;
+}
+
+/* Scrollbar industrial */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+::-webkit-scrollbar-track {
+    background: var(--bg-main);
+    border-left: 1px solid var(--border-color);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-primary);
+}
+
+/* ==========================================================================
+   Layout Principal
+   ========================================================================== */
+.app-container {
+    width: 100%;
+    max-width: 1000px;
+    padding: var(--space-2);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+@media (min-width: 768px) {
+    .app-container {
+        padding: var(--space-4);
+    }
+}
+
+/* Header */
+.app-header {
+    border-bottom: 1px solid var(--border-color);
+    padding: var(--space-3) 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+}
+
+.system-status {
+    font-family: var(--font-mono);
+    color: var(--accent-secondary);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.header-content h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+}
+
+.header-content p {
+    color: var(--text-secondary);
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* ==========================================================================
+   Componentes (Paneles Industriales)
+   ========================================================================== */
+.glass-panel {
+    background: var(--bg-panel);
+    border: 1px solid var(--border-color);
+    padding: var(--space-4);
+    position: relative;
+}
+
+/* Detalles decorativos en las esquinas */
+.glass-panel::before {
+    content: '';
+    position: absolute;
+    top: -1px; left: -1px;
+    width: 10px; height: 10px;
+    border-top: 2px solid var(--accent-primary);
+    border-left: 2px solid var(--accent-primary);
+}
+.glass-panel::after {
+    content: '';
+    position: absolute;
+    bottom: -1px; right: -1px;
+    width: 10px; height: 10px;
+    border-bottom: 2px solid var(--accent-primary);
+    border-right: 2px solid var(--accent-primary);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: var(--space-4);
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: var(--space-1);
+}
+
+.card-header h2 {
+    font-size: 1.5rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+
+.badge {
+    font-family: var(--font-mono);
+    color: var(--text-secondary);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.badge-accent {
+    color: var(--accent-primary);
+}
+
+/* ==========================================================================
+   Formularios y Entradas
+   ========================================================================== */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+}
+
+@media (min-width: 600px) {
+    .form-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    #btn-generate, #btn-test {
+        grid-column: span 2;
+    }
+}
+
+.params-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-2);
+    grid-column: 1 / -1;
+    padding: var(--space-2);
+    background: rgba(255,255,255,0.02);
+    border: 1px dashed var(--border-color);
+}
+
+@media (min-width: 600px) {
+    .params-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.input-group label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+input, select {
+    width: 100%;
+    padding: 12px;
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    transition: all var(--transition-fast);
+    outline: none;
+    border-radius: 0;
+}
+
+input:focus, select:focus {
+    border-color: var(--accent-primary);
+    background: rgba(0, 229, 255, 0.05);
+}
+
+option, optgroup {
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+}
+
+/* ==========================================================================
+   Botones Brutalistas
+   ========================================================================== */
+.btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 24px;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border: 1px solid;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    border-radius: 0;
+}
+
+.btn-primary {
+    background: var(--accent-primary);
+    color: #000;
+    border-color: var(--accent-primary);
+}
+
+.btn-primary:hover {
+    background: transparent;
+    color: var(--accent-primary);
+    box-shadow: inset 0 0 0 1px var(--accent-primary);
+}
+
+.btn-primary:active {
+    background: var(--accent-hover);
+    color: #000;
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--text-primary);
+    border-color: var(--text-secondary);
+}
+
+.btn-secondary:hover {
+    border-color: var(--text-primary);
+    background: var(--text-primary);
+    color: #000;
+}
+
+/* Loader */
+.btn-loader {
+    display: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid transparent;
+    border-top-color: currentColor;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+}
+
+.btn.loading .btn-text {
+    display: none;
+}
+.btn.loading .btn-loader {
+    display: block;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ==========================================================================
+   Tablas y Resultados Monospace
+   ========================================================================== */
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    border: 1px solid var(--border-color);
+    background: var(--bg-main);
+}
+
+.scroll-y {
+    max-height: 350px;
+    overflow-y: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+}
+
+th, td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border-color);
+    text-align: left;
+}
+
+th {
+    background: var(--bg-panel);
+    color: var(--text-secondary);
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+td strong {
+    color: var(--text-data);
+    font-weight: 700;
+}
+
+tbody tr:hover {
+    background: rgba(0, 229, 255, 0.05);
+}
+
+/* Resultados de Pruebas */
+.status-banner {
+    padding: var(--space-3);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-3);
+    background: var(--bg-main);
+    border: 1px solid var(--border-color);
+    border-left-width: 4px;
+}
+
+.status-banner.success {
+    border-left-color: var(--success);
+}
+.status-banner.success .verdict { color: var(--success); }
+
+.status-banner.fail {
+    border-left-color: var(--danger);
+}
+.status-banner.fail .verdict { color: var(--danger); }
+
+.verdict {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.reasoning-box {
+    margin-bottom: var(--space-4);
+    padding: var(--space-3);
+    background: var(--bg-main);
+    border: 1px dashed var(--border-color);
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    font-family: var(--font-mono);
+    line-height: 1.6;
+}
+
+.reasoning-box strong {
+    color: var(--text-primary);
+    display: block;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+}
+
+.results-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+}
+
+.result-box {
+    background: var(--bg-main);
+    border: 1px solid var(--border-color);
+    padding: var(--space-3);
+}
+
+.result-box h4 {
+    margin-bottom: var(--space-3);
+    color: var(--text-secondary);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 8px;
+}
+
+.latex-render {
+    overflow-x: auto;
+    font-size: 1.1rem;
+    padding: 10px;
+}
+
+/* Ocultar elementos */
+.hidden {
+    display: none !important;
+}
+
+.results-container {
+    margin-top: var(--space-4);
+    animation: fadeIn 0.3s ease-out forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+footer {
+    text-align: center;
+    padding: var(--space-4) 0;
+    color: var(--text-secondary);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}

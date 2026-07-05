@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Entornos virtuales
+venv/
+env/
+ENV/
+.venv/
+.env
+
+# Editores y Entornos de Desarrollo
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+
+# Archivos de sistema operativo (macOS/Windows)
+.DS_Store
+Thumbs.db
+
+# Carpetas del proyecto (Solicitado por el usuario)
+/documentacion/
