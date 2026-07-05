@@ -483,3 +483,69 @@ footer {
     text-transform: uppercase;
     letter-spacing: 0.1em;
 }
+
+/* ==========================================================================
+   Tooltips de Información Académica
+   ========================================================================== */
+.info-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--text-secondary);
+    font-family: var(--font-ui);
+    font-size: 10px;
+    font-weight: 800;
+    cursor: help;
+    margin-left: 6px;
+    vertical-align: middle;
+    transition: all var(--transition-fast);
+}
+
+.info-icon:hover {
+    background-color: var(--accent-primary);
+    color: #000;
+    border-color: var(--accent-primary);
+}
+
+[data-tooltip] {
+    position: relative;
+}
+
+[data-tooltip]::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 130%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: max-content;
+    max-width: 250px;
+    padding: 10px 12px;
+    background-color: var(--bg-panel);
+    color: var(--text-primary);
+    font-family: var(--font-ui);
+    font-size: 0.75rem;
+    font-weight: 300;
+    line-height: 1.4;
+    text-transform: none;
+    letter-spacing: normal;
+    border: 1px solid var(--border-color);
+    border-left: 2px solid var(--accent-primary);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease;
+    z-index: 100;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.8);
+    pointer-events: none;
+    white-space: normal;
+}
+
+[data-tooltip]:hover::before {
+    opacity: 1;
+    visibility: visible;
+    bottom: calc(100% + 10px);
+}
