@@ -27,7 +27,7 @@
         <!-- HEADER -->
         <header class="app-header">
             <div class="header-content">
-                <h1>Simulador Pseudoaleatorio</h1>
+                <h1>Simulador de Números Pseudoaleatorios</h1>
                 <p>GENERADOR PSEUDOALEATORIO Y MOTOR ESTADÍSTICO v1.0</p>
             </div>
         </header>
@@ -42,7 +42,8 @@
 
                 <form id="generator-form" class="form-grid">
                     <div class="input-group">
-                        <label for="method-select">Método de Generación <span class="info-icon" data-tooltip="Algoritmo matemático utilizado para producir la secuencia de números. Cada método tiene diferentes propiedades de ciclo y dispersión.">i</span></label>
+                        <label for="method-select">Método de Generación <span class="info-icon"
+                                data-tooltip="Algoritmo matemático utilizado para producir la secuencia de números. Cada método tiene diferentes propiedades de ciclo y dispersión.">?</span></label>
                         <select id="method-select" required>
                             <option value="congruential">Congruencial</option>
                             <option value="mid_square">Cuadrados Medios</option>
@@ -50,27 +51,32 @@
                     </div>
 
                     <div class="input-group">
-                        <label for="input-n">Cantidad a generar (n) <span class="info-icon" data-tooltip="Define el tamaño de la muestra (n) que se generará para el análisis estadístico.">i</span></label>
+                        <label for="input-n">Cantidad a generar (n) <span class="info-icon"
+                                data-tooltip="Define el tamaño de la muestra (n) que se generará para el análisis estadístico.">?</span></label>
                         <input type="number" id="input-n" placeholder="Ej: 100" required min="1">
                     </div>
 
                     <div class="input-group">
-                        <label for="input-seed">Semilla (X₀) <span class="info-icon" data-tooltip="Valor inicial que determina de forma determinista la secuencia completa. Debe ser un entero positivo.">i</span></label>
+                        <label for="input-seed">Semilla (X₀) <span class="info-icon"
+                                data-tooltip="Valor inicial que determina de forma determinista la secuencia completa. Debe ser un entero positivo.">?</span></label>
                         <input type="number" id="input-seed" placeholder="Ej: 3708" required min="1">
                     </div>
 
                     <!-- Parámetros específicos del congruencial -->
                     <div id="congruential-params" class="params-grid">
                         <div class="input-group">
-                            <label for="input-a">Multiplicador (a) <span class="info-icon" data-tooltip="Constante multiplicativa del algoritmo congruencial. Se selecciona para garantizar un ciclo máximo de vida del generador.">i</span></label>
+                            <label for="input-a">Multiplicador (a) <span class="info-icon"
+                                    data-tooltip="Constante multiplicativa del algoritmo congruencial. Se selecciona para garantizar un ciclo máximo de vida del generador.">?</span></label>
                             <input type="number" id="input-a" placeholder="Ej: 17">
                         </div>
                         <div class="input-group">
-                            <label for="input-c">Incremento (c) <span class="info-icon" data-tooltip="Constante aditiva. Si es mayor a 0, el generador es Mixto. Si es 0, el generador es Puramente Multiplicativo.">i</span></label>
+                            <label for="input-c">Incremento (c) <span class="info-icon"
+                                    data-tooltip="Constante aditiva. Si es mayor a 0, el generador es Mixto. Si es 0, el generador es Puramente Multiplicativo.">?</span></label>
                             <input type="number" id="input-c" placeholder="Ej: 43">
                         </div>
                         <div class="input-group">
-                            <label for="input-m">Módulo (m) <span class="info-icon" data-tooltip="Define el rango de los valores generados (de 0 a m-1). Limita el período máximo del ciclo.">i</span></label>
+                            <label for="input-m">Módulo (m) <span class="info-icon"
+                                    data-tooltip="Define el rango de los valores generados (de 0 a m-1). Limita el período máximo del ciclo.">?</span></label>
                             <input type="number" id="input-m" placeholder="Ej: 100">
                         </div>
                     </div>
@@ -115,7 +121,8 @@
 
                 <form id="validation-form" class="form-grid">
                     <div class="input-group">
-                        <label for="test-select">Seleccionar Prueba <span class="info-icon" data-tooltip="Herramienta estadística para validar si la muestra cumple con las propiedades de Uniformidad o Independencia.">i</span></label>
+                        <label for="test-select">Seleccionar Prueba <span class="info-icon"
+                                data-tooltip="Herramienta estadística para validar si la muestra cumple con las propiedades de Uniformidad o Independencia.">?</span></label>
                         <select id="test-select" required>
                             <optgroup label="Pruebas Básicas (Uniformidad)">
                                 <option value="medias">Prueba de Medias</option>
@@ -134,7 +141,8 @@
                     </div>
 
                     <div class="input-group">
-                        <label for="input-alpha">Nivel de Significancia (α) <span class="info-icon" data-tooltip="Probabilidad (Alpha) de rechazar la hipótesis nula cuando es verdadera. Un valor de 0.05 es el estándar.">i</span></label>
+                        <label for="input-alpha">Nivel de Significancia (α) <span class="info-icon"
+                                data-tooltip="Probabilidad (Alpha) de rechazar la hipótesis nula cuando es verdadera. Un valor de 0.05 es el estándar.">?</span></label>
                         <select id="input-alpha">
                             <option value="0.01">1% (0.01)</option>
                             <option value="0.05" selected>5% (0.05)</option>

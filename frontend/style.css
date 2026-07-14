@@ -120,12 +120,13 @@ body {
 }
 
 .header-content h1 {
-    font-size: 2.5rem;
+    font-size: clamp(1.5rem, 6vw, 2.5rem);
     font-weight: 800;
     color: var(--text-primary);
     text-transform: uppercase;
     letter-spacing: -0.03em;
     line-height: 1.1;
+    word-break: break-word;
 }
 
 .header-content p {
