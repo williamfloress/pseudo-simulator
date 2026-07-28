@@ -550,3 +550,50 @@ footer {
     visibility: visible;
     bottom: calc(100% + 10px);
 }
+
+/* ==========================================================================
+   Pestañas / Tab Navigation
+   ========================================================================== */
+.tab-navigation {
+    display: flex;
+    gap: 4px;
+    border-bottom: 1px solid var(--border-color);
+    background: var(--bg-main);
+    margin-bottom: var(--space-2);
+}
+
+.tab-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px 18px;
+    background: var(--bg-panel);
+    border: 1px solid var(--border-color);
+    border-bottom: none;
+    color: var(--text-secondary);
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.tab-btn:hover {
+    color: var(--text-primary);
+    background: rgba(0, 229, 255, 0.05);
+}
+
+.tab-btn.active {
+    color: var(--accent-primary);
+    background: var(--bg-panel);
+    border-color: var(--accent-primary);
+    border-bottom: 3px solid var(--accent-primary);
+    box-shadow: 0 4px 12px rgba(0, 229, 255, 0.15);
+}
+
+
+

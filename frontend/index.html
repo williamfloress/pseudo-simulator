@@ -4,19 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generador y Validador Pseudoaleatorio | Simulación y Modelos</title>
+    <title>Plataforma de Simulación y Modelos | Generación y Validaciones</title>
     <meta name="description"
-        content="Aplicación web para generación y validación estadística rigurosa de números pseudoaleatorios.">
+        content="Aplicación web para generación y validación estadística de números pseudoaleatorios y distribuciones de probabilidad.">
 
-    <!-- Google Fonts: Cyber-Industrial -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Outfit:wght@300;500;800&display=swap"
-        rel="stylesheet">
-
-    <!-- KaTeX CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <!-- KaTeX CSS Local -->
+    <link rel="stylesheet" href="vendor/katex/katex.min.css">
 
     <!-- Estilos de la aplicación -->
     <link rel="stylesheet" href="style.css">
@@ -26,181 +19,343 @@
     <div class="app-container">
         <!-- HEADER -->
         <header class="app-header">
+            <div class="system-status">LABORATORIO OFFLINE ACTIVO</div>
             <div class="header-content">
-                <h1>Simulador de Números Pseudoaleatorios</h1>
-                <p>GENERADOR PSEUDOALEATORIO Y MOTOR ESTADÍSTICO v1.0</p>
+                <h1>Plataforma de Simulación y Modelos</h1>
+                <p>MOTOR ESTADÍSTICO Y GENERADOR DE VARIABLES ALEATORIAS v2.0</p>
             </div>
         </header>
 
+        <!-- NAVEGACIÓN POR PESTAÑAS -->
+        <nav class="tab-navigation">
+            <button type="button" class="tab-btn active" id="tab-btn-pseudo" data-tab="tab-pseudo">
+                1. Pseudoaleatorios U(0,1)
+            </button>
+            <button type="button" class="tab-btn" id="tab-btn-distrib" data-tab="tab-distrib">
+                2. Variables Aleatorias (Distribuciones)
+            </button>
+        </nav>
+
         <main class="main-content">
-            <!-- SECCIÓN 1: GENERACIÓN -->
-            <section id="generator-section" class="card glass-panel">
-                <div class="card-header">
-                    <h2>1. Generar Números</h2>
-                    <span class="badge">Configuración</span>
-                </div>
-
-                <form id="generator-form" class="form-grid">
-                    <div class="input-group">
-                        <label for="method-select">Método de Generación <span class="info-icon"
-                                data-tooltip="Algoritmo matemático utilizado para producir la secuencia de números. Cada método tiene diferentes propiedades de ciclo y dispersión.">?</span></label>
-                        <select id="method-select" required>
-                            <option value="congruential">Congruencial</option>
-                            <option value="mid_square">Cuadrados Medios</option>
-                        </select>
+            <!-- ===================================================================
+                 PESTAÑA 1: GENERACIÓN Y VALIDACIÓN DE PSEUDOALEATORIOS U(0,1)
+                 =================================================================== -->
+            <div id="tab-pseudo" class="tab-pane">
+                <!-- SECCIÓN 1: GENERACIÓN -->
+                <section id="generator-section" class="card glass-panel">
+                    <div class="card-header">
+                        <h2>1. Generar Números U(0,1)</h2>
+                        <span class="badge">Configuración</span>
                     </div>
 
-                    <div class="input-group">
-                        <label for="input-n">Cantidad a generar (n) <span class="info-icon"
-                                data-tooltip="Define el tamaño de la muestra (n) que se generará para el análisis estadístico.">?</span></label>
-                        <input type="number" id="input-n" placeholder="Ej: 100" required min="1">
-                    </div>
-
-                    <div class="input-group">
-                        <label for="input-seed">Semilla (X₀) <span class="info-icon"
-                                data-tooltip="Valor inicial que determina de forma determinista la secuencia completa. Debe ser un entero positivo.">?</span></label>
-                        <input type="number" id="input-seed" placeholder="Ej: 3708" required min="1">
-                    </div>
-
-                    <!-- Parámetros específicos del congruencial -->
-                    <div id="congruential-params" class="params-grid">
+                    <form id="generator-form" class="form-grid">
                         <div class="input-group">
-                            <label for="input-a">Multiplicador (a) <span class="info-icon"
-                                    data-tooltip="Constante multiplicativa del algoritmo congruencial. Se selecciona para garantizar un ciclo máximo de vida del generador.">?</span></label>
-                            <input type="number" id="input-a" placeholder="Ej: 17">
+                            <label for="method-select">Método de Generación <span class="info-icon"
+                                    data-tooltip="Algoritmo matemático para producir la secuencia U(0,1).">?</span></label>
+                            <select id="method-select" required>
+                                <option value="congruential">Congruencial (Mixto / Multiplicativo)</option>
+                                <option value="mid_square">Cuadrados Medios</option>
+                            </select>
                         </div>
+
                         <div class="input-group">
-                            <label for="input-c">Incremento (c) <span class="info-icon"
-                                    data-tooltip="Constante aditiva. Si es mayor a 0, el generador es Mixto. Si es 0, el generador es Puramente Multiplicativo.">?</span></label>
-                            <input type="number" id="input-c" placeholder="Ej: 43">
+                            <label for="input-n">Cantidad a generar (n) <span class="info-icon"
+                                    data-tooltip="Tamaño de la muestra de números pseudoaleatorios.">?</span></label>
+                            <input type="number" id="input-n" placeholder="Ej: 100" required min="1">
                         </div>
+
                         <div class="input-group">
-                            <label for="input-m">Módulo (m) <span class="info-icon"
-                                    data-tooltip="Define el rango de los valores generados (de 0 a m-1). Limita el período máximo del ciclo.">?</span></label>
-                            <input type="number" id="input-m" placeholder="Ej: 100">
+                            <label for="input-seed">Semilla (X₀) <span class="info-icon"
+                                    data-tooltip="Valor inicial entero positivo.">?</span></label>
+                            <input type="number" id="input-seed" placeholder="Ej: 3708" required min="1">
                         </div>
-                    </div>
 
-                    <div class="button-group" style="grid-column: 1 / -1; display: flex; gap: var(--space-2);">
-                        <button type="submit" class="btn btn-primary" id="btn-generate" style="flex: 1;">
-                            <span class="btn-text">Generar Serie</span>
-                            <div class="btn-loader"></div>
-                        </button>
-                        <button type="button" class="btn btn-secondary" id="btn-reset" style="flex: 1;">
-                            <span class="btn-text">Limpiar Datos</span>
-                        </button>
-                    </div>
-                </form>
-
-                <!-- Resultados de generación -->
-                <div id="generation-results" class="results-container hidden">
-                    <h3>Números Generados</h3>
-                    <div class="table-wrapper scroll-y">
-                        <table id="numbers-table">
-                            <thead>
-                                <tr>
-                                    <th>i</th>
-                                    <th>X_i</th>
-                                    <th>r_i (U)</th>
-                                </tr>
-                            </thead>
-                            <tbody id="numbers-tbody">
-                                <!-- Filas inyectadas vía JS -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </section>
-
-            <!-- SECCIÓN 2: VALIDACIÓN (Se muestra solo si hay números generados) -->
-            <section id="validation-section" class="card glass-panel hidden">
-                <div class="card-header">
-                    <h2>2. Pruebas de Validación</h2>
-                    <span class="badge badge-accent">Análisis</span>
-                </div>
-
-                <form id="validation-form" class="form-grid">
-                    <div class="input-group">
-                        <label for="test-select">Seleccionar Prueba <span class="info-icon"
-                                data-tooltip="Herramienta estadística para validar si la muestra cumple con las propiedades de Uniformidad o Independencia.">?</span></label>
-                        <select id="test-select" required>
-                            <optgroup label="Pruebas Básicas (Uniformidad)">
-                                <option value="medias">Prueba de Medias</option>
-                                <option value="varianza">Prueba de Varianza</option>
-                                <option value="chi_cuadrada">Prueba Chi-Cuadrada (Bondad de Ajuste)</option>
-                            </optgroup>
-                            <optgroup label="Pruebas de Independencia">
-                                <option value="poker">Prueba de Poker (5 decimales)</option>
-                                <option value="corridas">Prueba de Corridas (Arriba/Abajo)</option>
-                                <option value="series">Prueba de Series (Pares 2D)</option>
-                            </optgroup>
-                            <optgroup label="Avanzadas">
-                                <option value="kolmogorov_smirnov">Prueba de Kolmogorov-Smirnov</option>
-                            </optgroup>
-                        </select>
-                    </div>
-
-                    <div class="input-group">
-                        <label for="input-alpha">Nivel de Significancia (α) <span class="info-icon"
-                                data-tooltip="Probabilidad (Alpha) de rechazar la hipótesis nula cuando es verdadera. Un valor de 0.05 es el estándar.">?</span></label>
-                        <select id="input-alpha">
-                            <option value="0.01">1% (0.01)</option>
-                            <option value="0.05" selected>5% (0.05)</option>
-                            <option value="0.10">10% (0.10)</option>
-                        </select>
-                    </div>
-
-                    <button type="submit" class="btn btn-secondary" id="btn-test">
-                        <span class="btn-text">Ejecutar Prueba</span>
-                        <div class="btn-loader"></div>
-                    </button>
-                </form>
-
-                <!-- Resultados de validación -->
-                <div id="test-results" class="results-container hidden">
-                    <div id="test-status-banner" class="status-banner">
-                        <h3 id="test-title">Prueba de ...</h3>
-                        <div id="test-verdict" class="verdict"></div>
-                    </div>
-
-                    <div class="reasoning-box" id="test-reasoning">
-                        <p id="reasoning-text"></p>
-                    </div>
-
-                    <div class="results-grid">
-                        <!-- Matemáticas LaTeX -->
-                        <div class="result-box math-box">
-                            <h4>Desarrollo Matemático</h4>
-                            <div id="latex-container" class="latex-render">
-                                <!-- LaTeX inyectado vía JS -->
+                        <!-- Parámetros específicos del congruencial -->
+                        <div id="congruential-params" class="params-grid">
+                            <div class="input-group">
+                                <label for="input-a">Multiplicador (a) <span class="info-icon"
+                                        data-tooltip="Constante multiplicativa del algoritmo congruencial.">?</span></label>
+                                <input type="number" id="input-a" placeholder="Ej: 17">
+                            </div>
+                            <div class="input-group">
+                                <label for="input-c">Incremento (c) <span class="info-icon"
+                                        data-tooltip="Constante aditiva. Si c > 0 es Mixto, si c = 0 es Multiplicativo.">?</span></label>
+                                <input type="number" id="input-c" placeholder="Ej: 43">
+                            </div>
+                            <div class="input-group">
+                                <label for="input-m">Módulo (m) <span class="info-icon"
+                                        data-tooltip="Rango máximo del período.">?</span></label>
+                                <input type="number" id="input-m" placeholder="Ej: 100">
                             </div>
                         </div>
 
-                        <!-- Gráfico Visual -->
-                        <div class="result-box chart-box">
-                            <h4>Análisis Visual</h4>
-                            <div class="chart-container" style="position: relative; height: 300px; width: 100%;">
-                                <canvas id="test-chart"></canvas>
-                            </div>
+                        <div class="button-group" style="grid-column: 1 / -1; display: flex; gap: var(--space-2);">
+                            <button type="submit" class="btn btn-primary" id="btn-generate" style="flex: 1;">
+                                <span class="btn-text">Generar Serie U(0,1)</span>
+                                <div class="btn-loader"></div>
+                            </button>
+                            <button type="button" class="btn btn-secondary" id="btn-reset" style="flex: 1;">
+                                <span class="btn-text">Limpiar Datos</span>
+                            </button>
                         </div>
-                    </div>
+                    </form>
 
-                    <!-- Tabla de detalles extra si aplica (ej. chi cuadrada) -->
-                    <div id="extra-details-container" class="extra-details hidden">
-                        <h4>Detalles adicionales</h4>
+                    <!-- Resultados de generación U(0,1) -->
+                    <div id="generation-results" class="results-container hidden">
+                        <h3>Números Generados U(0,1)</h3>
                         <div class="table-wrapper scroll-y">
-                            <table id="extra-table">
+                            <table id="numbers-table">
                                 <thead>
-                                    <!-- Inyectado JS -->
+                                    <tr>
+                                        <th>i</th>
+                                        <th>X_i</th>
+                                        <th>r_i (U)</th>
+                                    </tr>
                                 </thead>
-                                <tbody id="extra-tbody">
+                                <tbody id="numbers-tbody">
                                     <!-- Inyectado JS -->
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                </div>
-            </section>
+                </section>
+
+                <!-- SECCIÓN 2: VALIDACIÓN U(0,1) -->
+                <section id="validation-section" class="card glass-panel hidden" style="margin-top: var(--space-4);">
+                    <div class="card-header">
+                        <h2>2. Pruebas de Validación U(0,1)</h2>
+                        <span class="badge badge-accent">Análisis Estadística</span>
+                    </div>
+
+                    <form id="validation-form" class="form-grid">
+                        <div class="input-group">
+                            <label for="test-select">Seleccionar Prueba <span class="info-icon"
+                                    data-tooltip="Evaluación estadística de uniformidad e independencia.">?</span></label>
+                            <select id="test-select" required>
+                                <optgroup label="Pruebas de Uniformidad">
+                                    <option value="medias">Prueba de Medias</option>
+                                    <option value="varianza">Prueba de Varianza</option>
+                                    <option value="chi_cuadrada">Prueba Chi-Cuadrada (Bondad de Ajuste)</option>
+                                    <option value="kolmogorov_smirnov">Prueba de Kolmogorov-Smirnov</option>
+                                </optgroup>
+                                <optgroup label="Pruebas de Independencia">
+                                    <option value="poker">Prueba de Poker (5 decimales)</option>
+                                    <option value="corridas">Prueba de Corridas (Arriba/Abajo)</option>
+                                    <option value="series">Prueba de Series (Pares 2D)</option>
+                                </optgroup>
+                            </select>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="input-alpha">Nivel de Significancia (α) <span class="info-icon"
+                                    data-tooltip="Probabilidad de rechazar H0 siendo verdadera.">?</span></label>
+                            <select id="input-alpha">
+                                <option value="0.01">1% (0.01)</option>
+                                <option value="0.05" selected>5% (0.05)</option>
+                                <option value="0.10">10% (0.10)</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-secondary" id="btn-test">
+                            <span class="btn-text">Ejecutar Prueba</span>
+                            <div class="btn-loader"></div>
+                        </button>
+                    </form>
+
+                    <!-- Resultados de validación U(0,1) -->
+                    <div id="test-results" class="results-container hidden">
+                        <div id="test-status-banner" class="status-banner">
+                            <h3 id="test-title">Prueba...</h3>
+                            <div id="test-verdict" class="verdict"></div>
+                        </div>
+
+                        <div class="reasoning-box" id="test-reasoning">
+                            <p id="reasoning-text"></p>
+                        </div>
+
+                        <div class="results-grid">
+                            <div class="result-box math-box">
+                                <h4>Desarrollo Matemático</h4>
+                                <div id="latex-container" class="latex-render"></div>
+                            </div>
+                            <div class="result-box chart-box">
+                                <h4>Análisis Visual</h4>
+                                <div class="chart-container" style="position: relative; height: 300px; width: 100%;">
+                                    <canvas id="test-chart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="extra-details-container" class="extra-details hidden" style="margin-top: var(--space-3);">
+                            <h4>Detalles Adicionales</h4>
+                            <div class="table-wrapper scroll-y">
+                                <table id="extra-table">
+                                    <thead></thead>
+                                    <tbody id="extra-tbody"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- ===================================================================
+                 PESTAÑA 2: VARIABLES ALEATORIAS Y DISTRIBUCIONES DE PROBABILIDAD
+                 =================================================================== -->
+            <div id="tab-distrib" class="tab-pane hidden">
+                <!-- SECCIÓN 1: GENERACIÓN DE DISTRIBUCIONES -->
+                <section class="card glass-panel">
+                    <div class="card-header">
+                        <h2>1. Generar Variables Aleatorias (Non-Uniform)</h2>
+                        <span class="badge badge-accent">Distribuciones</span>
+                    </div>
+
+                    <form id="dist-generator-form" class="form-grid">
+                        <div class="input-group">
+                            <label for="dist-type-select">Distribución de Probabilidad <span class="info-icon"
+                                    data-tooltip="Modelo de probabilidad continua o discreta a simular.">?</span></label>
+                            <select id="dist-type-select" required>
+                                <optgroup label="Distribuciones Continuas">
+                                    <option value="uniform_continuous">Uniforme Continua U(a, b)</option>
+                                    <option value="exponential" selected>Exponencial Exp(λ)</option>
+                                    <option value="normal">Normal N(μ, σ²)</option>
+                                    <option value="erlang">Erlang E_k(λ)</option>
+                                    <option value="triangular">Triangular T(a, b, c)</option>
+                                </optgroup>
+                                <optgroup label="Distribuciones Discretas">
+                                    <option value="uniform_discrete">Uniforme Discreta U(a, b)</option>
+                                    <option value="bernoulli">Bernoulli P(p)</option>
+                                    <option value="binomial">Binomial Bin(n, p)</option>
+                                    <option value="poisson">Poisson Poi(λ)</option>
+                                    <option value="geometric">Geométrica G(p)</option>
+                                </optgroup>
+                            </select>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="dist-input-n">Cantidad a generar (n) <span class="info-icon"
+                                    data-tooltip="Tamaño de muestra de variables aleatorias a generar.">?</span></label>
+                            <input type="number" id="dist-input-n" placeholder="Ej: 100" value="100" required min="1">
+                        </div>
+
+                        <!-- PARÁMETROS DINÁMICOS SEGÚN DISTRIBUCIÓN -->
+                        <div id="dist-params-container" class="params-grid">
+                            <!-- Inyectado dinámicamente vía JS -->
+                        </div>
+
+                        <div class="input-group" style="grid-column: 1 / -1;">
+                            <label for="dist-base-gen">Generador Base U(0,1) <span class="info-icon"
+                                    data-tooltip="Algoritmo pseudoaleatorio para generar los r_i de entrada.">?</span></label>
+                            <select id="dist-base-gen">
+                                <option value="random">Generador Estándar del Sistema</option>
+                                <option value="congruential">Método Congruencial (Mixto/Multiplicativo)</option>
+                                <option value="mid_square">Método de Cuadrados Medios</option>
+                            </select>
+                        </div>
+
+                        <div class="button-group" style="grid-column: 1 / -1; display: flex; gap: var(--space-2);">
+                            <button type="submit" class="btn btn-primary" id="btn-dist-generate" style="flex: 1;">
+                                <span class="btn-text">Generar Variables Aleatorias</span>
+                                <div class="btn-loader"></div>
+                            </button>
+                            <button type="button" class="btn btn-secondary" id="btn-dist-reset" style="flex: 1;">
+                                <span class="btn-text">Limpiar Datos</span>
+                            </button>
+                        </div>
+                    </form>
+
+                    <!-- Resultados de Generación de Distribuciones -->
+                    <div id="dist-generation-results" class="results-container hidden">
+                        <h3 id="dist-table-title">Variables Aleatorias Generadas</h3>
+                        <div class="table-wrapper scroll-y">
+                            <table id="dist-numbers-table">
+                                <thead>
+                                    <tr>
+                                        <th>i</th>
+                                        <th>r_i Base U(0,1)</th>
+                                        <th>Variable X_i</th>
+                                        <th>Transformación / Regla</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="dist-numbers-tbody">
+                                    <!-- Inyectado JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- SECCIÓN 2: VALIDACIÓN ESTADÍSTICA DE DISTRIBUCIONES -->
+                <section id="dist-validation-section" class="card glass-panel hidden" style="margin-top: var(--space-4);">
+                    <div class="card-header">
+                        <h2>2. Pruebas de Validación de Distribución</h2>
+                        <span class="badge badge-accent">Bondad de Ajuste</span>
+                    </div>
+
+                    <form id="dist-validation-form" class="form-grid">
+                        <div class="input-group">
+                            <label for="dist-test-select">Seleccionar Prueba de Validación <span class="info-icon"
+                                    data-tooltip="Valida si la muestra generada se ajusta a la distribución teórica.">?</span></label>
+                            <select id="dist-test-select" required>
+                                <option value="chi_cuadrada">Prueba Chi-Cuadrada (Bondad de Ajuste)</option>
+                                <option value="kolmogorov_smirnov">Prueba Kolmogorov-Smirnov (Solo Continuas)</option>
+                                <option value="medias">Prueba de Medias (Muestral vs Teórica μ)</option>
+                                <option value="varianza">Prueba de Varianza (Muestral vs Teórica σ²)</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="dist-input-alpha">Nivel de Significancia (α) <span class="info-icon"
+                                    data-tooltip="Probabilidad de error tipo I (Alpha).">?</span></label>
+                            <select id="dist-input-alpha">
+                                <option value="0.01">1% (0.01)</option>
+                                <option value="0.05" selected>5% (0.05)</option>
+                                <option value="0.10">10% (0.10)</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-secondary" id="btn-dist-test">
+                            <span class="btn-text">Ejecutar Prueba</span>
+                            <div class="btn-loader"></div>
+                        </button>
+                    </form>
+
+                    <!-- Resultados de Validación de Distribuciones -->
+                    <div id="dist-test-results" class="results-container hidden">
+                        <div id="dist-test-status-banner" class="status-banner">
+                            <h3 id="dist-test-title">Prueba de...</h3>
+                            <div id="dist-test-verdict" class="verdict"></div>
+                        </div>
+
+                        <div class="reasoning-box" id="dist-test-reasoning">
+                            <p id="dist-reasoning-text"></p>
+                        </div>
+
+                        <div class="results-grid">
+                            <div class="result-box math-box">
+                                <h4>Desarrollo Matemático</h4>
+                                <div id="dist-latex-container" class="latex-render"></div>
+                            </div>
+                            <div class="result-box chart-box">
+                                <h4>Análisis Visual y Densidad/Masa Teórica</h4>
+                                <div class="chart-container" style="position: relative; height: 300px; width: 100%;">
+                                    <canvas id="dist-test-chart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="dist-extra-details-container" class="extra-details hidden" style="margin-top: var(--space-3);">
+                            <h4>Frecuencias Observadas vs Esperadas</h4>
+                            <div class="table-wrapper scroll-y">
+                                <table id="dist-extra-table">
+                                    <thead></thead>
+                                    <tbody id="dist-extra-tbody"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
         </main>
 
         <footer>
@@ -213,10 +368,10 @@
         </footer>
     </div>
 
-    <!-- Scripts de terceros -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+    <!-- Scripts locales (Offline Engine) -->
+    <script src="vendor/chart.umd.js"></script>
+    <script defer src="vendor/katex/katex.min.js"></script>
+    <script defer src="vendor/katex/auto-render.min.js"></script>
 
     <!-- Script principal -->
     <script src="app.js"></script>

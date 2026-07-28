@@ -1,27 +1,39 @@
-# Python
+# Python / Cache
 __pycache__/
 *.py[cod]
 *$py.class
+*.so
 
-# Entornos virtuales
+# Entornos Virtuales
 venv/
 env/
 ENV/
 .venv/
 .env
 
-# Editores y Entornos de Desarrollo
+# Editores y Entornos de Desarrollo / SO
 .vscode/
 .idea/
 *.swp
 *.swo
-
-# Logs
-*.log
-
-# Archivos de sistema operativo (macOS/Windows)
 .DS_Store
 Thumbs.db
+desktop.ini
 
-# Carpetas del proyecto (Solicitado por el usuario)
+# Logs y archivos de bases de datos o temporales
+*.log
+*.sqlite
+*.sqlite3
+*.db
+
+# Archivos minificados generados en el proyecto
+*.min.js
+*.min.css
+*.min.*
+
+# Excepción: No ignorar archivos vendor (necesarios para soporte offline del frontend)
+!frontend/vendor/
+!frontend/vendor/**
+
+# Carpetas de documentación (Solicitado por el usuario)
 /documentacion/
